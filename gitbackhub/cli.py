@@ -8,9 +8,9 @@ import requests
 
 APP_NAME = "gitbackhub"
 GITHUB_API_URL = "https://api.github.com"
-OWN_REPOS_URL = "/user/repos?page={page}&access_token={access_token}&affiliation=owner"
-USER_REPOS_URL = "/users/{user}/repos?page={page}&access_token={access_token}"
-ORG_REPOS_URL = "/orgs/{org}/repos?page={page}&access_token={access_token}"
+OWN_REPOS_URL = "/user/repos?page={page}&affiliation=owner"
+USER_REPOS_URL = "/users/{user}/repos?page={page}"
+ORG_REPOS_URL = "/orgs/{org}/repos?page={page}"
 
 
 def read_config(file=None):
@@ -20,12 +20,13 @@ def read_config(file=None):
     return parser
 
 
-def _fetch_repos(base_url, **kwargs):
+def _fetch_repos(base_url, access_token, **kwargs):
     page = 1
     repos = []
+    headers = {"Authorization": "token {token}".format(token=access_token)}
     while True:
         url = GITHUB_API_URL + base_url.format(page=page, **kwargs)
-        response = requests.get(url)
+        response = requests.get(url, headers=headers)
         response.raise_for_status()
         json = response.json()
         if json:
