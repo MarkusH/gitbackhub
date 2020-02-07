@@ -1,36 +1,25 @@
-# -*- coding: utf-8 -*-
-from setuptools import find_packages, setup
+import setuptools
 
-import codecs
+with open("README.md", "r") as f:
+    long_description = f.read()
 
-import gitbackhub
-
-_version = "0.1.0"
-
-with codecs.open('README.rst', 'r', 'utf-8') as readme:
-    _long_description = readme.read()
-
-setup(
-    name='gitbackhub',
-    version=gitbackhub.__version__,
-    description=readme,
-    author=gitbackhub.__author__,
-    author_email=gitbackhub.__email__,
+setuptools.setup(
+    name="gitbackhub",
+    author="Markus Holtermann",
+    author_email="info@markusholtermann.eu",
+    description="A script to backup / mirror GitHub repositories.",
+    license="MIT",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/MarkusH/gitbackhub",
-    license='MIT',
-    packages=find_packages(),
-    install_requires=[
-        "Click>=6",
-        "requests>=2.18.3",
-    ],
-    entry_points={
-        'console_scripts': [
-            'gitbackhub = gitbackhub.cli:cli',
-        ],
-    },
+    packages=setuptools.find_packages(),
+    install_requires=["Click>=6", "requests>=2.18.3"],
+    extras_require={"testing": ["pytest>=5.3,<5.4"]},
+    setup_requires=["setuptools_scm>=3.4.2,<4"],
+    use_scm_version=True,
+    entry_points={"console_scripts": ["gitbackhub = gitbackhub.cli:cli"]},
     classifiers=(
-        "Development Status :: 3 - Alpha",
-        # "Development Status :: 5 - Production/Stable",
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "Intended Audience :: End Users/Desktop",
