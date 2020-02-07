@@ -5,6 +5,9 @@ CHANGELOG
 Unreleased
 ==========
 
+0.2.0 - 2020-02-07
+==================
+
 - Replace deprecated ``access_token`` with ``Authorization`` header in GitHub
   API URLs.
 
